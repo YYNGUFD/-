@@ -5,6 +5,8 @@
 
 ### 单例模式
   [笔记链接](http://note.youdao.com/noteshare?id=9befb3f6905ad6ff09b3aeef7739da61)
+### 发布订阅模式（事件监听）
+  [笔记链接](http://note.youdao.com/noteshare?id=8816fa0889ff4cb81db14987fcebdafa)
 ### 结构型设计模式
   * [整合总结](http://note.youdao.com/noteshare?id=87e530774951626e47aee742a176b867)
   * [亨元模式](http://note.youdao.com/noteshare?id=e1f037a5db341dcd29c08ba5b5fa88d5)

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <h3>测试</h3> 
+  </div>
+  
+  <!-- <script src="completeEvent.js"></script> -->
+  <!-- <script src="otherDemo.js"></script> -->
+  <!-- <script src="nodeEvent.js"></script> -->
+  <script src="./myEvent.js"></script>
+  <script>
+  var event = new EventEmitter();
+  console.log(event)  
+  //订阅一个click
+  event.on('click',fn1=function(){
+    console.log(...arguments)
+  }) 
+  event.on('click',fn2=function(){
+    console.log(...arguments)
+  }) 
+  event.on('add',fn3=function(){
+    console.log(...arguments)
+  }) 
+  event.on('add',fn4=function(){
+    console.log(...arguments)
+  })
+  event.once('add',fn5=function(){
+    console.log("我是绑定一次的add")
+  })
+  event.emit('click',333) 
+  event.emit('add',444,555,666)
+  console.log(event)
+  var result = event.removeListener('reduce',fn1)
+  console.log(result)
+  var result1 = event.removeListener('click',fn1)
+  console.log(result1)
+  var result2 = event.removeListener('add',fn1)
+  console.log(result2)
+  var result3 = event.removeAllListener('add')
+  console.log(result3)
+
+  // console.log(event.getEventNames())
+
+  </script>
+</body>
+</html>

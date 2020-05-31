@@ -68,7 +68,7 @@ var CreateDiv = (function () {
   return CreateDiv;
 })();
 
-var a = new CreateDiv('mafengyan1');
-var b = new CreateDiv('mafengyan2');
+var a = new CreateDiv('ma11');
+var b = new CreateDiv('maf22');
 console.log(a)
 console.log(b)
