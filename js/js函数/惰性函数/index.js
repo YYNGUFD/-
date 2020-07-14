@@ -1,11 +1,4 @@
-/*
- * @Descripttion: 
- * @version: 
- * @Author: mafengyan
- * @Date: 2020-07-02 09:22:51
- * @LastEditors: mafengyan
- * @LastEditTime: 2020-07-06 10:11:30
- */ 
+
 //绑定事件
 function addEvent(type, element, fun) {
     if (element.addEventListener) {
