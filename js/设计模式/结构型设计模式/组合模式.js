@@ -61,7 +61,7 @@ File.prototype.remove = function(){
     }
   }
 }
-var f1 = new File("mafengyan")
+var f1 = new File("eee")
 var f2 = new File("mingyang")
 var fo1 = new Folder("love")
 var fo2 = new Folder("time")
