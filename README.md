@@ -9,6 +9,7 @@
  * [代码链接](https://github.com/MYNGUFD/-/tree/master/js/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F)
 ### js高级函数
  * [代码链接](http://note.youdao.com/noteshare?id=54551d84eb165f01b9eb48aeed82ff91)
+### 判断数据
 
 ## css
 

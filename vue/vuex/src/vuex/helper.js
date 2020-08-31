@@ -1,6 +1,15 @@
  
 // import { createNamespacedHelpers } from "vuex";
-
+/**
+ * 命名空间参数
+ * @param {*} namespace 
+ */
+var createNamespacedHelpers = function (namespace) { return ({
+  mapState: mapState.bind(null, namespace),
+  mapGetters: mapGetters.bind(null, namespace),
+  mapMutations: mapMutations.bind(null, namespace),
+  mapActions: mapActions.bind(null, namespace)
+}); };
 //考虑嵌套问题 可能会影响到
 // createNamespacedHelpers
 export function mapState(stateArr){
