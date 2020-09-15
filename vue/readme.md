@@ -1,3 +1,4 @@
+
  
 # axios 的原理探究
 ## 代码使用
@@ -8,3 +9,6 @@
 
 * [基本使用](http://note.youdao.com/s/15fCz58B)
 * [原理使用](http://note.youdao.com/s/BlE1iKAj)
+
+# 长列表优化
+* [基本思路](http://note.youdao.com/s/BCzVccYF)
