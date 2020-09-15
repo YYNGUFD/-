@@ -6,7 +6,7 @@
     <div class="scroll-bar" ref="scrollbar"></div>
     <!-- 列表位置 -->
     <div class="scroll-list" :style="{transform:`translate3d(0,${offset}px,0)`}">
-      <div v-for="(item,index) in visibleData" ref="items" :key="item.id" :vid="index">
+      <div v-for="(item) in visibleData" ref="items" :key="item.id" :vid="item.id">
         <!-- 通过插槽传出去 -->
         <slot :item="item"></slot>
       </div>
