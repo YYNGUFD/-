@@ -1,0 +1,30 @@
+ 
+ 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    <P v-mybind></P>
+  </div>
+  <script src="node_modules/vue-template-compiler/browser.js"></script>
+  <script>
+    //template =>ast =>codegen =>with+function实现生成render的方法
+    let {
+      ast,
+      render
+    } = VueTemplateCompiler.compile('<div><slot :data="data"></slot><slot name="a"></slot> </div>')
+    //生成了render  
+    console.log(ast)
+    console.log(new Function(render)) 
+  </script>
+
+</body>
+
+</html>
