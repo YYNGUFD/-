@@ -50,6 +50,17 @@ function resolvePromise(promise2, x, resolve, reject) {
     return resolve(x)
   }
 }
+ 
+
+function isPromise(value) {
+  if ((typeof value === 'object' && value !== null) || typeof value === 'function') {
+    if (typeof value.then == 'function') {
+      return true
+    }
+  }
+  return false;
+}
+
 class Promise {
   //看这个属性 能够在原型上使用
   //看属性是否公用
@@ -99,9 +110,9 @@ class Promise {
     //里面的函数会立刻执行
     let promise2 = new Promise((resolve, reject) => {
       //成功的时候
-      if (this.status == RESOLVED) {
+      if (this.status == RESOLVED) { 
         //定时器处理异常 为了保障promise2已经用完了
-        setTimeout(() => {
+         setTimeout(() => {
           //try 执行函数的时候会报错 在then里面的数据
           try {
             //x 需要判断是否是promise和规整化  
@@ -167,14 +178,6 @@ Promise.defer = Promise.deferred = function () {
   return dfd
 }
 
-function isPromise(value) {
-  if ((typeof value === 'object' && value !== null) || typeof value === 'function') {
-    if (typeof value.then == 'function') {
-      return true
-    }
-  }
-  return false;
-}
 /**
  * 全部成功才能成功，一个失败才会失败
  * promiseList 表示当前传递的数组对象
@@ -331,6 +334,33 @@ Promise.allSettled = function (promiseList) {
   })
 
 }
+/**
+ * Promise.any()方法接受一组 Promise 实例作为参数，包装成一个新的 Promise 实例。只要参数实例有一个变成fulfilled状态，包装实例就会变成fulfilled状态；如果所有参数实例都变成rejected状态，包装实例就会变成rejected状态。该方法目前是一个第三阶段的提案 。
+ * @param {*} promiseList promise的参数列表
+ */
+Promise.any = function(promiseList){
+  promiseList = promiseList.map(item => {
+    return !isPromise(item) ? Promise.resolve(item) : item;
+  });
+  let index = 0; 
+  let result=[]
+  return new Promise((resolve,reject)=>{
+    for (let i = 0; i < promiseList.length; i++) {
+      current = promiseList[i]
+      if (isPromise(current)) {
+        current.then((data) => {
+          resolve(data)
+        }, (err) => { 
+          index++; 
+          result.push(err)
+          if(index == promiseList.length){
+            reject(err);
+          } 
+        })
+      } 
+    }
+  })
+}
 
 /**
  * promise try方法
@@ -340,8 +370,7 @@ Promise.allSettled = function (promiseList) {
  * 就是模拟try代码块
  */
 
-Promise.try = function (fn, argumnts = null, ...args) {
-
+Promise.try = function (fn, argumnts = null, ...args) { 
   if (typeof fn == 'function') {
     return new Promise(resolve => resolve(fn.apply(argumnts, args)))
   } else {
@@ -350,6 +379,5 @@ Promise.try = function (fn, argumnts = null, ...args) {
       throw err
     });
   }
-
 }
 module.exports = Promise
