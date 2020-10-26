@@ -5101,21 +5101,29 @@
   lifecycleMixin(Vue);
   renderMixin(Vue);
 
-  /*  */
-
+  /**
+   * usee函数 
+   * @param {*} Vue  传入Vue 兼容版本问题
+   */
   function initUse(Vue) {
+    //传入要使用的插件
     Vue.use = function (plugin) {
+      //
       var installedPlugins = (this._installedPlugins || (this._installedPlugins = []));
+      //判断当前插件是否已经存在
       if (installedPlugins.indexOf(plugin) > -1) {
         return this
       }
 
-      // additional parameters
+      // 额外的参数
       var args = toArray(arguments, 1);
       args.unshift(this);
+      //进行注册
       if (typeof plugin.install === 'function') {
+        //如果组件是对象，并且提供了install方法，调用install方法将参数数组传入
         plugin.install.apply(plugin, args);
       } else if (typeof plugin === 'function') {
+        //如果传入大的组件是汗水，则进行调用即可
         plugin.apply(null, args);
       }
       installedPlugins.push(plugin);

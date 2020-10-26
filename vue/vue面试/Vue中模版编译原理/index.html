@@ -19,7 +19,7 @@
     let {
       ast,
       render
-    } = VueTemplateCompiler.compile('<div><slot :data="data"></slot><slot name="a"></slot> </div>')
+    } = VueTemplateCompiler.compile('<div v-show="true"><span v-if="dada" ref="span"></span> <List ref="list"></List> </div>')
     //生成了render  
     console.log(ast)
     console.log(new Function(render)) 
