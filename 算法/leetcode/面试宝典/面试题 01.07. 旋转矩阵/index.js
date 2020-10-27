@@ -31,11 +31,28 @@
 * @return {void} Do not return anything, modify matrix in-place instead.
 */
 var rotate = function (matrix) {
-    for(var i=0;i<matrix.length;i++){
-        for(var j=matrix[0].length-1;j>i;j++){
+    var length = matrix.length;
+    //对线折中
+    for(var i=0;i<length;i++){
+        for(var j=0;j<length/2;j++){
            var temp = matrix[i][j] ;//临时存储数据
-           matrix[i][j] 
+           matrix[i][j] = matrix[i][length-j-1]
+           matrix[i][length-j-1] = temp
         }
     }
+    //对角线折中
+    for(var i=0;i<length;i++){
+        for(var j=0;j<length-i;j++){
+           var temp = matrix[i][j] ;//临时存储数据
+           matrix[i][j] = matrix[length-1-j][length-1-i];
+           matrix[length-1-j][length-1-i] = temp;
+        }
+    }
+    return matrix;
 
 };
+console.log(rotate([
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+   ]))
