@@ -8,7 +8,7 @@
  * 原来位置上的元素向后顺移。
  */
 var arr = [2,5,3,3];
-function quickSort(arr){
+function insertSort(arr){
   var temp ;
   var i,j;
   for( i = 1;i<arr.length;i++){
@@ -23,7 +23,7 @@ function quickSort(arr){
   } 
   return arr
 }
-var haveSort = quickSort(arr)
+var haveSort = insertSort(arr)
 console.log(haveSort)
 /**
  * 2 5 3 3 

@@ -1,11 +1,11 @@
+ 
 /**
  * 排序序列的值进行两两 如果当前排序的值小于前面的相邻值，则进行位置的替换，如果是大于前面的值，则进行下一个元素比较
  */
 console.log("冒泡排序")
 
 var arr = [1,2,3,2,1,2];
-function poolSort(arr){
-
+function poolSort(arr){ 
   //外层循环为标志元素
   for(var i=0;i<arr.length;i++){
     var flag = false; //用来标记下一循环中是否还存在交换的元素 不存在的话就直接返回已经排好序列
@@ -26,6 +26,7 @@ function poolSort(arr){
   return arr;
 }
 console.log(poolSort(arr))
+ 
 /**
  * 文字描述排序过程 排序数组：[1,2,3,2,1,2]
  * i=0 时 flag =false进入内层循环

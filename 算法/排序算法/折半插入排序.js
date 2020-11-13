@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 1.0.0
+ * @Author: Mfy
+ * @Date: 2020-05-20 16:41:58
+ * @LastEditors: Mfy
+ * @LastEditTime: 2020-11-04 10:56:11
+ */
 /**
  *折半插入排序
  * 折半插入排序在寻找插入位置时，不是逐个比较而是利用折半查找的原理寻找插入位置 。待排序元素越多，改进效果越明显。
@@ -25,7 +33,7 @@ function halfSort(arr){
         }else{
           low = mid +1 //带排序元素的位置在右侧
         }
-      }
+      } 
       //查找之后能够获取到当前元素的一个位置 元素将被插入后high的下一个位置中
       //确定好位置后 元素之后的位置向后移动 插入到待排序的数据中
       for(j=i-1;j> high;j--){
@@ -37,7 +45,7 @@ function halfSort(arr){
   return arr;
 }
 
-var a = halfSort([3,4,5,6,8,2,3]);
+var a = halfSort([12,11,8,9,15]);
 console.log(a);
 /**
  * 文字描述 排序3，4，5，6，7，8,2,3 过程
