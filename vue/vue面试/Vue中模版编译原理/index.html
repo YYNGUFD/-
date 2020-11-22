@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 1.0.0
+ * @Author: Mfy
+ * @Date: 2020-10-09 09:18:52
+ * @LastEditors: Mfy
+ * @LastEditTime: 2020-11-18 16:14:12
+-->
  
  
 <!DOCTYPE html>
@@ -19,7 +27,7 @@
     let {
       ast,
       render
-    } = VueTemplateCompiler.compile('<div v-show="true"><span v-if="dada" ref="span"></span> <List ref="list"></List> </div>')
+    } = VueTemplateCompiler.compile(`<input v-model="reu"></input>`)
     //生成了render  
     console.log(ast)
     console.log(new Function(render)) 
