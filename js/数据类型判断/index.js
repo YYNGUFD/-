@@ -1,5 +1,8 @@
 
 // 基本数据类型
+
+const { fdatasync } = require("fs");
+
 // 数字
 var isNumber = function (val){
   return typeof val === 'number' && !isNaN(val);
@@ -123,3 +126,71 @@ function toObject(arr){
   }
   return res
 }
+console.log(typeof 1) //number
+console.log(typeof 'sss')//string
+console.log(typeof [2323])//object
+console.log(typeof (Symbol(3))) //symbol
+console.log(typeof true) //boolean
+console.log(typeof undefined) //undefined
+console.log(typeof null) //object
+console.log(typeof NaN) //number
+
+ 
+console.log('a' instanceof String) //false
+console.log({} instanceof Object) //true
+console.log([] instanceof Array) //true
+console.log(true instanceof Boolean) //false
+console.log(Symbol(2) instanceof Symbol) //false
+
+function instanceofD(left,right){
+   if(typeof left !='object' || left==null) return false;
+     //获得类型的原型
+     var prototype =  right.prototype;
+     //获取对象的原型
+     left = left.__proto__;
+     while(true){
+       if(left ==null){
+         return false;
+       }
+       if(left ==prototype){
+         return true;
+       }
+       left = left.__proto__
+     }
+}
+console.log("执行---额定义")
+console.log(instanceofD({},Object))
+console.log(instanceofD(null,Object))
+
+let a1 =Object.prototype.toString.call({})
+let a2 =Object.prototype.toString.call('333')
+let a5 =Object.prototype.toString.call(true)
+let a4 =Object.prototype.toString.call(1)
+let a3 =Object.prototype.toString.call([])
+let a6 =Object.prototype.toString.call(()=>{})
+console.log(a1,a2,a3,a4,a5,a6)
+
+var foo =1;
+(function foo(){
+  foo=10
+  console.log(foo)
+})()
+
+
+
+function create(Constructor){
+  //获得一个新的对象
+  let newObj = new Object();
+  //创建构造函数绑定this 执行构造函数  
+  let result = Constructor.call(arguments); 
+  //链接到原型
+  newObj.__proto__ = Constructor.prototype; 
+  //返回新创建的this
+  return typeof result =='object' ? result : newObj
+}
+function P(name,age){
+  this.name =name;
+  this.age = age;
+}
+var obk = create(P,333,2323) 
+console.log(obk instanceof P)

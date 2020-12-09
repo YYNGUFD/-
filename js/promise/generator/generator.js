@@ -3,17 +3,17 @@
 
 // * yield  产出
 //iterator 迭代器
-// function* read(){
-//   yield 1;
-//   yield 2;
-//   yield 3;
-//   return 100
-// }
-// let it = read();
-// console.log(it.next()); //{ value: 1, done: false }
-// console.log(it.next()); //{ value: 2, done: false }
-// console.log(it.next()); //{ value: 3, done: false }
-// console.log(it.next()); //{ value: 100, done: true }
+function* read(){
+  yield 1;
+  yield 2;
+  yield 3;
+  return 100
+}
+let it = read();
+console.log(it.next()); //{ value: 1, done: false }
+console.log(it.next()); //{ value: 2, done: false }
+console.log(it.next()); //{ value: 3, done: false }
+console.log(it.next()); //{ value: 100, done: true }
 
 
 // for of 循环 必须要有iterator
@@ -54,7 +54,7 @@ function* read(){
   let b = yield "yyy";
   console.log(b)
 }
-let it2 = read();
+let it2 = read(); 
 
 //1.遇到yield就停止
 console.log(it2.next())//第一次next的传递的参数是没有任何意义的
@@ -94,3 +94,40 @@ co(readFile()).then(data=>{
 
 
 
+/** generator */
+
+function generator(cb){
+  return (function(){
+    var object={
+      next:0,
+      stop:()=>{  }
+    }
+    return {
+      next:function(){
+        var ret = cb(object);
+        if(ret ==undefined) return {
+          value:undefined,done:true
+        }
+        return {
+          value:ret,
+          done:false
+        }
+      }
+    }
+  })()
+}
+var a =9
+var fun = function (params) {
+  console.log(33) 
+}
+var data = generator(fun);
+console.log(data)
+ data = data.next(); 
+
+ function* gen(){
+  let a =  yield 333;
+  let b = yield 333
+ }
+var it99 = gen()
+it99 = it99.next();
+console.log(it99)
