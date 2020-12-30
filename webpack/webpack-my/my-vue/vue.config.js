@@ -28,7 +28,7 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 
 // const PurgecssPlugin = require('purgecss-webpack-plugin')
-// const devServerRewrite = require('./proxy/pageConfig.js')//使用history模式的页面path rewrite
+// const devServerRewrite = 是require('./proxy/pageConfig.js')//  使用history模式的页面path rewrite
 
 //获取当前dll的版本信息 
 let {  version_lib,  openGzip, } = require('./package.json');

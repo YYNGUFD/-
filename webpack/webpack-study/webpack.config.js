@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2020-12-08 08:42:43
  * @LastEditors: Mfy
- * @LastEditTime: 2020-12-09 10:43:25
+ * @LastEditTime: 2020-12-18 08:44:17
  */
 const path = require('path');
 const webpack = require('webpack')
@@ -14,172 +14,101 @@ const notify = require("node-notifier");
 //打包速度衡量工具
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack5-plugin');
 const smw = new SpeedMeasureWebpackPlugin();
-//打包体积监控
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 //编译时间优化
-//bootstrap的引入
-const bootstrap = path.resolve(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.css');
 
-//压缩 
-
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
- 
 //因为CSS和JS的加载可以并行，所以我们可以通过此插件提取CSS成单独的文件,然后去掉无用的 css并进行压缩
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PurgecssWebpackPlugin = require('purgecss-webpack-plugin');
-
-//glob.sync(`${PATHS.src}/**/*`,{nodir:true})
-const glob = require('glob');//文件匹配模式
-const PATHS = {
-    src:path.resolve(__dirname,'src')
-}
-
-const icon = path.join(__dirname, 'icon.png');
 
 //项目初始化
 module.exports = smw.wrap({
   //配置模式
-  mode: 'development',
+  mode: 'production',
   //调试工具选择
   devtool: 'source-map',
   context: process.cwd(),
-  entry: './src/index.js',
+
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
+    filename: '[name].js',
+    chunkFilename: '[name].js'
   },
-  //解析
-  resolve: {
-    extensions: ['.js', '.jsx', '.json'],//指定文件的扩展名,找不到会报错
-    alias: { bootstrap },//指定查找别名
-    modules: ["c:/node_modules", 'node_modules'],// 指定查找目录
-    mainFields: ['browser', 'module', 'main'],//从package.json中的哪个字段查找入口文件
-    mainFiles: ['index']//如果找不到mainFields的话，会找索引文件，index.js
+  entry: {
+    page1: "./src/page1.js",
+    page2: "./src/page2.js",
+    page3: "./src/page3.js",
   },
-  //可以增加自定义的loader
-  resolveLoader: {
-    modules: [path.resolve(__dirname, "loaders"), 'node_modules'],
-  },
-  externals: {
-    jquery: 'jQuery'
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      minify: { //压缩HTML
-        collapseWhitespace: true,
-        removeComments: true
+  optimization: {
+    splitChunks: {
+      chunks: 'all',//默认只分割出去的异步代码块
+      minSize: 0,//分割出去的代码块的最小体积 0表示不限制
+      minRemainingSize: 0, // 分割后剩下的体积 0表示不限制 webpack5 新增加的参数
+      maxSize: 0,//分割出去的代码块的最大体积 0表示不限制
+      minChunks: 1,//如果此模块被多个模块饮用，会被分割
+      maxAsyncRequests: 5,//异步分割出去的几个代码块
+      maxInitialRequests: 10,//同步分割出去的几个代码块
+      automaticNameDelimiter: '~',//分割出去的分割符
+      enforceSizeThreshold: 50000,//强制阙值，新增加灿水
+      cacheGroups: {//缓存组配置 配置如何怼模块分组相同分组会被分到一个代码块中去
+        default:false,
       }
-    }),
-    new MiniCssExtractPlugin({
-      filename:'[name].css'
-     }),
-    //匹配任意字段，包括路径分隔符，*匹配任意字符，不包含路径分隔符
-    new PurgecssWebpackPlugin({
-        paths:glob.sync(`${PATHS.src}/**/*`,{nodir:true})
-    }),
-    new FriendLsyErrottWepackPlugin({
-      onErrors: (serity, errors) => {
-        let error = errors[0]
-        notify.notify({
-          title: "webpack编译失败",
-          message: serity + ":" + errors.name,
-          subtitle: error.file || '',
-          icon
-        })
-      }
-    }),
-    // 直接打开网站
-    // new BundleAnalyzerPlugin() ,
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'disabled', //不直接启动打包报告的http服务器
-      generateStatsFile: true, //生成打包文件效果描述
-    }),
-    //   new webpack.IgnorePlugin({
-    //     resourceRegExp:/^\.\/locale$/, //资源正则
-    //     contextRegExp:/moment$/  //上下文，目录正则
-    //  }),
-    
-    //压缩css
-    new OptimizeCssAssetsWebpackPlugin() 
+    } 
+},
+plugins: [
+  new HtmlWebpackPlugin({
+    template: './src/index.html',
+    filename: 'page1.html',
+    chunks: ['page1'],
+    minify: { //压缩HTML
+      collapseWhitespace: true,
+      removeComments: true
+    }
+  }),
+  new HtmlWebpackPlugin({
+    template: './src/index.html',
+    filename: 'page2.html',
+    chunks: ['page2'],
+  }),
+  new HtmlWebpackPlugin({
+    template: './src/index.html',
+    filename: 'page3.html',
+    chunks: ['page3']
+  }),
 
+],
 
-
-  ],
-  optimization:{
-    minimize:true,//开启最小化
-    minimizer:[
-      //压缩js
-      new TerserPlugin({}),
-    ] 
-  },
-  //直接引用，不会在进行打包文件
-  // external:{
-  //   jquery:'jQuery',
-  // }, 
-  module: {
-    //如果模块的路径匹配到正则的化，就不需要查找依赖项目了
-    noParse: /title.js/,
-    rules: [
-      {
-        test: /\.js/,
-        include:path.resolve(__dirname,'src'),
-        exclude:/node_modules/,
-        use: [
-          // { loader: 'thread-loader',
-          //  options: { workers: 3 } 
-          // },
-          {
-            loader:'babel-loader',
-            options:{
-              cacheDirectory: true,
-            }
-          },
-        ]
-      },
-      //只匹配数组中的某一个，如果找到了就不再查找了
-      {
-        test: /\.css/,
-        include: path.resolve(__dirname, "src"),
-        exclude: /node_modules/,
-        use: [
-          {loader:MiniCssExtractPlugin.loader},
-          //增加loading
-          // 'cache-loader',
-          // 'style-loader',
-          'css-loader',
-        ]
-      }, 
-      // {
-      //   test:/\.(jpg|png|gif|bmp)$/,
-      //   use:[
-      //      {
-      //          loader:'image-webpack-loader',
-      //          options: {
-      //           mozjpeg: {
-      //             progressive: true,
-      //           },
-      //           optipng: {
-      //             enabled: false,
-      //           },
-      //           pngquant: {
-      //             quality: [0.65, 0.90],
-      //             speed: 4
-      //           },
-      //           gifsicle: {
-      //             interlaced: false,
-      //           },
-      //           webp: {
-      //             quality: 75
-      //           }
-      //         }
-      //      }
-      //   ]
-      // }
-    ]
-  }
+module: {
+  rules: [{
+      test: /\.js/,
+      include: path.resolve(__dirname, 'src'),
+      exclude: /node_modules/,
+      use: [
+        // { loader: 'thread-loader',
+        //  options: { workers: 3 } 
+        // },
+        {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          }
+        },
+      ]
+    },
+    //只匹配数组中的某一个，如果找到了就不再查找了
+    {
+      test: /\.css/,
+      include: path.resolve(__dirname, "src"),
+      exclude: /node_modules/,
+      use: [{
+          loader: MiniCssExtractPlugin.loader
+        },
+        //增加loading
+        // 'cache-loader',
+        // 'style-loader',
+        'css-loader',
+      ]
+    },
+  ]
+}
 })
