@@ -4,8 +4,10 @@
  * @Author: Mfy
  * @Date: 2020-12-06 14:56:12
  * @LastEditors: Mfy
- * @LastEditTime: 2020-12-06 15:47:46
+ * @LastEditTime: 2021-01-06 18:04:36
  */
+
+const { time } = require("console");
 
 //防抖
 
@@ -111,3 +113,118 @@ function throttle(func, wait=2000, options) {
     return result; 
   }
 }
+
+/**
+ * 函数防抖 避免过多的执行
+ * @param {*} func 要执行的函数
+ * @param {*} wait 多少时间执行一次
+ * @param {*} immediate  是否是立即执行
+ */
+const myDebounce = function(func,wait=500,immediate=false){
+ let context,timer = null;  
+ return function(){
+    var args = arguments;
+    if(immediate && !timer){
+      //如果是立即执行函数 则立即执行
+      console.log(this)
+      func.call(this,...args)
+    }
+    //如果当前存在定时器 则进行清除
+    if(timer) clearTimeout(timer)
+    timer = setTimeout(()=>{
+      func.call(this,...args)
+    },wait)
+ }
+}
+let i=0;
+function list(b){
+  console.log(i++)
+  console.log(b)
+}
+// list = myDebounce(list,500,false);
+// list(33)
+// list(34)
+// list(35)
+
+/**
+ * 函数节流
+ * @param {*} func  要进行节流的函数
+ * @param {*} wait  多少秒执行
+ * @param {*} immediate 是否是立刻执行
+ */
+const myThrottle = function (func,wait =500,immediate =false){
+  let timer = null;
+  return function(){
+    var args = arguments;
+    if(immediate && !timer){
+     return  func.call(this,...args)
+    }
+    if(!timer){
+      timer = setTimeout(()=>{
+       clearTimeout(timer)
+       timer =null;
+       return func.call(this,...args); 
+      },wait)
+    }   
+  }
+}
+// var a=0;
+// function list1(b){
+//   console.log(a++) 
+//   console.log(b) 
+// }
+// list1 = myThrottle(list1,500,false); 
+// list1(4)
+// list1(5)
+// setInterval(() => {
+//   console.log("----333----")
+//   list1(a++)
+// }, 600);
+
+function debounce(fun,wait=0,immediate=true){
+  let timer = null;
+  return function () {
+
+    if(!timer && immediate){
+      return  fun.call(this,...arguments)
+    }
+    if(timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+       fun.call(this,...arguments)
+    }, wait);  
+  }
+}
+// function list(index){
+//   console.log(index)
+// }
+// list = debounce(list,300);
+// list(1)
+// list(2)
+// list(6)
+
+function myThrottle1(fun,wait=500,immediate=false){
+  let timer = null;
+  return function () {
+    if(!timer && immediate){
+      fun.call(this,...arguments)
+    }
+    if(!timer){
+     timer= setTimeout(() => {
+         clearTimeout(timer)
+         timer = null;
+         fun.call(this,...arguments)
+      }, wait);
+    }
+  }
+}
+function list2(index){
+  console.log(index)
+}
+list2 = myThrottle1(list2,1000);
+list2(1)
+list2(2)
+list2(6)
+var iiu=0;
+setInterval(()=>{
+  list2(iiu++)
+},300)

@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2020-12-27 10:35:09
  * @LastEditors: Mfy
- * @LastEditTime: 2020-12-27 12:36:32
+ * @LastEditTime: 2021-01-05 08:39:56
  */ 
 // 插件代码
 class MyWebpackPlugin {
@@ -17,13 +17,14 @@ class MyWebpackPlugin {
       console.log("启动一次新的编译")
     })
     compiler.hooks.compile.tap('MyWebpackPlugin', (compilationParams) => { 
-      console.log("创建compilation对象之前")
+      // console.log("创建compilation对象之前",JSON.stringify(compilationParams))
     });
     compiler.hooks.emit.tapAsync('MyWebpackPlugin', (compilation, callback) => {
-      setTimeout(()=>{
-        console.log('文件列表', Object.keys(compilation.assets).join(','));
+      // console.log(compilation)
+      // setTimeout(()=>{
+      //   console.log('文件列表', Object.keys(compilation.assets).join(','));
         callback();
-      }, 1000);
+      // }, 1000);
     });
     compiler.hooks.compilation.tap('MyWebpackPlugin', (compilation) => { 
       console.log("compilation对象创建完成")
@@ -46,19 +47,19 @@ exports.MyWebpackPlugin = MyWebpackPlugin;
   constructor(options) {
   }
   apply(compiler) {
-    // compiler.hooks.emit.tapAsync('DefineWebpack', (compilation, callback) => {
-    //   // compilation.chunks存放了代码块列表
-    //   compilation.chunks.forEach(chunk => {
-    //    // chunk包含多个模块，通过chunk.modulesIterable可以遍历模块列表 
-    //     for(const module of chunk.modulesIterable) {
-    //       // module包含多个依赖，通过module.dependencies进行遍历
-    //       module.dependencies.forEach(dependency => {
-    //         console.log(dependency);
-    //       });
-    //     }
-    //   });
-    //   callback();
-    // });
+    compiler.hooks.emit.tapAsync('DefineWebpack', (compilation, callback) => {
+      // compilation.chunks存放了代码块列表
+      compilation.chunks.forEach(chunk => {
+       // chunk包含多个模块，通过chunk.modulesIterable可以遍历模块列表 
+        for(const module of chunk.modulesIterable) {
+          // module包含多个依赖，通过module.dependencies进行遍历
+          module.dependencies.forEach(dependency => {
+            console.log(dependency);
+          });
+        }
+      });
+      callback();
+    });
     compiler.hooks.emit.tapAsync('DefineWebpack', (compilation,callback) => {
       // 修改或添加资源
       console.log(  compilation.assets)

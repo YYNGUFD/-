@@ -123,9 +123,7 @@ Function.prototype.unCurring=function(){
         return _this.apply(obj,arguments); //更改当前的this指向
     }
 }
-
 //另一种方法实现
-
 Function.prototype.currying = function() {
     var _this = this;
     return function() {

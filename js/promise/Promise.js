@@ -381,3 +381,32 @@ Promise.try = function (fn, argumnts = null, ...args) {
   }
 }
 module.exports = Promise
+
+
+Promise.all = function(promiseList){
+  if(Array.isArray(promiseList)){
+     return false;
+  }
+  let result=[]
+  let index = 0
+  return new Promise((resolve,reject)=>{ 
+    function processData(i,value){
+      result[i] = value
+      if(++index == promiseList.length){ 
+        resolve(result)
+      } 
+    }
+    for(var i=0;i<promiseList.length;i++){
+      let current = promiseList[i]
+      if(isPromise(current)){
+        current.then((data)=>{
+          processData(i,data)
+        },(err)=>{
+          reject(err)
+        })
+      }else{
+        processData(i,current)
+      }
+    }
+  })
+}

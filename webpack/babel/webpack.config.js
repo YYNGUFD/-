@@ -4,25 +4,25 @@
  * @Author: Mfy
  * @Date: 2020-12-17 13:56:40
  * @LastEditors: Mfy
- * @LastEditTime: 2020-12-18 13:36:37
+ * @LastEditTime: 2021-01-07 17:55:10
  */
 const path = require('path');
 
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
-  // devtool:'source-map',
+  devtool:'source-map',
   // devtool:'eval-source-map',
   // devtool: 'cheap-module-eval-source-map',
   // devtool: 'cheap-eval-source-map',
   // devtool: 'eval',
   // devtool: 'cheap-source-map',
-  devtool: 'cheap-module-source-map',
-  output: {
+  // devtool: 'cheap-module-source-map',
+  output: {  
     path: path.resolve(__dirname, 'dist'),
     // filename: '[name].[hash].js',
     // filename: '[name].[hash].js',
-    filename: '[name].[contenthash].js',
+    filename: '[name].[contenthash:3].js',
   },
   module: {
     rules: [{

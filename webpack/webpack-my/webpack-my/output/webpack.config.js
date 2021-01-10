@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 1.0.0
+ * @Author: Mfy
+ * @Date: 2020-09-20 09:17:36
+ * @LastEditors: Mfy
+ * @LastEditTime: 2021-01-07 17:34:17
+ */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin'); 
@@ -7,6 +15,7 @@ module.exports = {
     app: './src/index.js', 
     // print: './src/index.js'
   },
+  sourceMap:'eval',
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
