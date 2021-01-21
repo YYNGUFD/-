@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-01-04 14:43:12
  * @LastEditors: Mfy
- * @LastEditTime: 2021-01-08 14:53:11
+ * @LastEditTime: 2021-01-20 10:11:12
  */
 const compose = require('./koa-compose')
 function one(ctx,next){
@@ -22,7 +22,7 @@ function three(ctx,next){
   next();
   console.log('第三个--结束');
 }
-let result = compose([one,two,three])
+// let result = compose([one,two,three])
 // console.log(result)
 // result(0)
 function one(ctx,next){
@@ -42,11 +42,15 @@ function three(ctx,next){
 console.log(one())
 
 
-const Koa = require('koa');
-const app = new Koa()
+// const Koa = require('koa');
+// const app = new Koa()
 
-app.use((ctx,next)=>{
-  console.log(ctx);
-  console.log(next)
-})
-app.listen(400)
+// app.use((ctx,next)=>{
+//   console.log(ctx);
+//   console.log(next)
+// })
+// app.listen(400)
+if(true){
+  let a = require('./compose')
+  console.log(a)
+}

@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2020-12-31 19:16:28
  * @LastEditors: Mfy
- * @LastEditTime: 2021-01-01 09:14:50
+ * @LastEditTime: 2021-01-11 19:27:37
  */
 const { createTree } = require('../create-binary-tree/index')
 let array = [10,7,6,8,9,13,5,11,14] 
@@ -27,7 +27,7 @@ function isSametree(tree1,tree2){
     return false;
   }
   //比较左子树和右子树
-  return  isSametree(tree1.left) && isSametree(tree2.right)
+  return  isSametree(tree1.left,tree2) && isSametree(tree2.right,tree2)
 }
 
 let result1 = isSametree(tree2,tree)

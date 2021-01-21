@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-01-04 14:23:59
  * @LastEditors: Mfy
- * @LastEditTime: 2021-01-04 14:38:27
+ * @LastEditTime: 2021-01-20 10:11:02
  */
 const Koa = require('koa');
 let app = new Koa();
@@ -27,3 +27,4 @@ app.use((ctx)=>{
 console.log(app)
 
 app.listen(4000)
+module.exports =3;
